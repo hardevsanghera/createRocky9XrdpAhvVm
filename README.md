@@ -1,13 +1,13 @@
-# Rocky Production Scripts
+# Scripts to Deploy a Rocky 9 Workstation via Nutanix Prism Central and AHV Hypervisor
 
-This repository contains Bash tools for working with Prism Central and
-provisioning a Rocky Linux 9 virtual machine as an XRDP workstation.
+This repository contains Bash tools for working with Nutanix Prism Central and
+provisioning a Rocky Linux 9 virtual machine as an accessible via XRDP workstation.
 
 ## Repository contents
 
 | File | Purpose |
 | --- | --- |
-| `prism-central-inventory.sh` | Lists Prism Central clusters, images, storage containers, and subnets. Displays the results and writes a TSV inventory with names, ExtIDs, and cluster associations. |
+| `prism-central-inventory.sh` | Lists Prism Central clusters, images, storage containers, and subnets. Displays the results and writes a TSV inventory with names, ExtIDs, and cluster associations. Rename the output .tsv to eg. PC-inv.tsv |
 | `create-rocky9-xrdp-vm.sh` | Resolves resource names from the TSV, creates and starts a VM, waits for cloud-init and SSH, then launches the remote workstation setup. |
 | `cloud-config-tpl.yaml` | Cloud-init template used by the VM creation script to create the VM users, install SSH prerequisites, and configure SSH access. |
 | `whichvapi.sh` | Tests VMM API versions `v4.0` through `v4.3` against the Prism Central images endpoint. |
@@ -41,7 +41,7 @@ The Prism Central password is requested interactively:
 
 ```bash
 ./prism-central-inventory.sh \
-  --host 10.55.8.7 \
+  --host 1.2.3.4 \
   --port 9440 \
   --username admin \
   --output PC-inv.tsv
@@ -57,7 +57,7 @@ is requested interactively.
 
 ```bash
 ./create-rocky9-xrdp-vm.sh \
-  --pc-host 10.55.8.7 \
+  --pc-host 10..10.10.10 \
   --pc-port 9440 \
   --pc-username admin \
   --prism-api-version 4.3 \
@@ -70,9 +70,9 @@ is requested interactively.
   --userid2 rockyadmin \
   --userid1-pw 'REPLACE_WITH_PASSWORD' \
   --userid2-pw 'REPLACE_WITH_PASSWORD' \
-  --userid1-sshkey-file id_ed25519.pub \
-  --userid2-sshkey-file id_ed25519.pub \
-  --ssh-private-key-file id_ed25519 \
+  --userid1-sshkey-file mykey.pub \
+  --userid2-sshkey-file mykey.pub \
+  --ssh-private-key-file mykey \
   --vm-disk-size-gb 100 \
   --vm-memory-size-gb 24 \
   --vm-vcpus 4
@@ -87,9 +87,6 @@ startup. Follow setup progress on the VM with:
 sudo tail -f /var/log/rocky-xrdp-setup.log
 ```
 
-VM account passwords are command-line arguments and may be visible in shell
-history or process listings. Replace the example values and handle them
-accordingly. Avoid committing passwords or private keys to this repository.
 Use `--insecure` only when you intentionally want to skip Prism Central TLS
 certificate verification.
 
