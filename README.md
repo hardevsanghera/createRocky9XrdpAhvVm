@@ -12,7 +12,7 @@ provisioning a Rocky Linux 9 virtual machine as an accessible via XRDP workstati
 | `cloud-config-tpl.yaml` | Cloud-init template used by the VM creation script to create the VM users, install SSH prerequisites, and configure SSH access. |
 | `whichvapi.sh` | Tests VMM API versions `v4.0` through `v4.3` against the Prism Central images endpoint. |
 
-(*) These scripts have been tested and work with Nutanix Prism Central 7.6.0.10 and the parameter "--prism-api-version 4.3" you can see which versions of the API are supported by your Prism Central by running the `whichapi.sh` script. 
+(*) All the scripts here have been tested and work with Nutanix Prism Central 7.6.0.10 and the parameter "--prism-api-version 4.3" you can see which versions of the API are supported by your Prism Central by running the `whichvapi.sh` script. 
 
 ## Requirements
 
