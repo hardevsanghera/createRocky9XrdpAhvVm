@@ -25,6 +25,8 @@ users:
     shell: /bin/bash
     ssh_authorized_keys:
       - {{USERID1SSHKEY}}
+    sudo:
+      - "ALL=(ALL) NOPASSWD:ALL"
   - name: {{USERID2}}
     groups:
       - wheel
