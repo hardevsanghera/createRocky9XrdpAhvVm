@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PC="10.8.53.7"
+PC="10.1.1.1"
 PC_USER="admin"
 
 printf "Prism Central password: " >&2
