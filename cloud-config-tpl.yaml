@@ -1,0 +1,42 @@
+#cloud-config
+
+package_update: true
+
+packages:
+  - curl
+  - openssh-server
+
+runcmd:
+  - sshd -t
+  - systemctl enable --now sshd
+  - |
+    if systemctl is-active --quiet firewalld; then
+      firewall-cmd --permanent --add-service=ssh
+      firewall-cmd --reload
+    fi
+
+ssh_pwauth: true
+
+users:
+  - name: {{USERID1}}
+    groups:
+      - wheel
+    lock_passwd: false
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - {{USERID1SSHKEY}}
+  - name: {{USERID2}}
+    groups:
+      - wheel
+    lock_passwd: false
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - {{USERID2SSHKEY}}
+    sudo:
+      - "ALL=(ALL) NOPASSWD:ALL"
+
+chpasswd:
+  list: |
+    {{USERID1}}:{{USERID1PW}}
+    {{USERID2}}:{{USERID2PW}}
+  expire: false
