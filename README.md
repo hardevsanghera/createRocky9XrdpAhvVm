@@ -8,9 +8,11 @@ provisioning a Rocky Linux 9 virtual machine as an accessible via XRDP workstati
 | File | Purpose |
 | --- | --- |
 | `prism-central-inventory.sh` | Lists Prism Central clusters, images, storage containers, and subnets. Displays the results and writes a TSV inventory with names, ExtIDs, and cluster associations. Rename the output .tsv to eg. PC-inv.tsv |
-| `create-rocky9-xrdp-vm.sh` | Resolves resource names from the TSV, creates and starts a VM, waits for cloud-init and SSH, then launches the remote workstation setup. |
+| `create-rocky9-xrdp-vm.sh` | Resolves resource names from the TSV, creates and starts a VM, waits for cloud-init and SSH, then launches the remote workstation setup. The parameter --prism-api-version n.n should be given to the script(*)  |
 | `cloud-config-tpl.yaml` | Cloud-init template used by the VM creation script to create the VM users, install SSH prerequisites, and configure SSH access. |
 | `whichvapi.sh` | Tests VMM API versions `v4.0` through `v4.3` against the Prism Central images endpoint. |
+
+(*) These scripts have been tested and work with Nutanix Prism Central 7.6.0.10 and the parameter "--prism-api-version 4.3" you can see which versions of the API are supported by your Prism Central by running the `whichapi.sh` script. 
 
 ## Requirements
 
@@ -77,6 +79,7 @@ is requested interactively.
   --vm-memory-size-gb 24 \
   --vm-vcpus 4
 ```
+You can get the names (to use in the parameters above) of clusters, storage containers, subnets and images by running `prism-central-inventory.sh`
 
 The API version defaults to `4.3`. Run
 `./create-rocky9-xrdp-vm.sh --help` for all options and defaults. The script
