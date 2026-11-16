@@ -102,6 +102,8 @@ verification.
 
 ## Companion repository
 
+The Rocky 9 image I have access to in my Prism Central is of a "server" VM, I want a "workstation" that I can access via an RDP client so I need to configure the workstation bit and install xrdp, thats what the companion repo does.
+
 `create-rocky9-xrdp-vm.sh` downloads and runs
 [`setup-rocky9-xrdp.sh`](https://github.com/hardevsanghera/xrdpOnRocky9/blob/main/setup-rocky9-xrdp.sh)
 from the companion
